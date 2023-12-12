@@ -4,7 +4,9 @@ from comfy.ldm.modules.encoders.noise_aug_modules import CLIPEmbeddingNoiseAugme
 from comfy.ldm.modules.diffusionmodules.openaimodel import Timestep
 import comfy.model_management
 import comfy.conds
+import comfy.ops
 from enum import Enum
+import contextlib
 from . import utils
 
 class ModelType(Enum):
@@ -40,9 +42,14 @@ class BaseModel(torch.nn.Module):
         unet_config = model_config.unet_config
         self.latent_format = model_config.latent_format
         self.model_config = model_config
+        self.manual_cast_dtype = model_config.manual_cast_dtype
 
         if not unet_config.get("disable_unet_model_creation", False):
-            self.diffusion_model = UNetModel(**unet_config, device=device)
+            if self.manual_cast_dtype is not None:
+                operations = comfy.ops.manual_cast
+            else:
+                operations = comfy.ops
+            self.diffusion_model = UNetModel(**unet_config, device=device, operations=operations)
         self.model_type = model_type
         self.model_sampling = model_sampling(model_config, model_type)
 
@@ -61,6 +68,10 @@ class BaseModel(torch.nn.Module):
 
         context = c_crossattn
         dtype = self.get_dtype()
+
+        if self.manual_cast_dtype is not None:
+            dtype = self.manual_cast_dtype
+
         xc = xc.to(dtype)
         t = self.model_sampling.timestep(t).float()
         context = context.to(dtype)
@@ -70,6 +81,7 @@ class BaseModel(torch.nn.Module):
             if hasattr(extra, "to"):
                 extra = extra.to(dtype)
             extra_conds[o] = extra
+
         model_output = self.diffusion_model(xc, t, context=context, control=control, transformer_options=transformer_options, **extra_conds).float()
         return self.model_sampling.calculate_denoised(sigma, model_output, x)
 
