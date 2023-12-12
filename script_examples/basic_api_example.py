@@ -100,21 +100,29 @@ prompt_text = """
 }
 """
 
-def queue_prompt(prompt):
-    p = {"prompt": prompt}
+def queue_prompt(prompt, extra_data):
+    p = {"prompt": prompt, 
+         "extra_data": extra_data}
     data = json.dumps(p).encode('utf-8')
     req =  request.Request("http://127.0.0.1:8188/prompt", data=data)
     request.urlopen(req)
 
 
-prompt = json.loads(prompt_text)
-#set the text prompt for our positive CLIPTextEncode
-prompt["6"]["inputs"]["text"] = "masterpiece best quality man"
+# prompt = json.loads(prompt_text)
+# #set the text prompt for our positive CLIPTextEncode
+# prompt["6"]["inputs"]["text"] = "masterpiece best quality man"
 
-#set the seed for our KSampler node
-prompt["3"]["inputs"]["seed"] = 5
+# #set the seed for our KSampler node
+# prompt["3"]["inputs"]["seed"] = 5
 
+# read json file
+with open("script_examples/workflow_api.json", "r") as read_file:
+    prompt = json.load(read_file)
 
-queue_prompt(prompt)
+# with open("script_examples/workflow.json", "r") as read_file:
+#     extra_data = json.load(read_file)
+extra_data = {"extra_pnginfo": {"workflow": {"nodes": [{"id": 120, "properties": {"values": [[840,208,80],[336,200,80]]}}]}}}
+
+queue_prompt(prompt, extra_data)
 
 

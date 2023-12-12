@@ -1,0 +1,399 @@
+{
+  "89": {
+    "inputs": {
+      "ckpt_name": "lineLibraryHand_v10.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple"
+  },
+  "90": {
+    "inputs": {
+      "stop_at_clip_layer": -2,
+      "clip": [
+        "89",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer"
+  },
+  "93": {
+    "inputs": {
+      "text": "3girls (flat chest:0.9),(fennec ears:1.0) (fox ears:1.0),(messy hair),(highlights),blue eyes,(hoodie),open jacket,running (school uniform),hoiding hands sky clouds nature national park beautiful winter snow scenery HDR landscapce (sunset)",
+      "clip": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "94": {
+    "inputs": {
+      "text": "(low quality,worst quality:1.3),(monochrome:1.1),(hands),text,error,cropped,normal quality,(jpeg artifacts:1.3),signature,watermark,username,blurry,artist name,sketch,censorship,censor,(copyright:1.2),extra legs,(forehead mark),(depth of field) (emotionless),(pumkin)",
+      "clip": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "95": {
+    "inputs": {
+      "text": "sky clouds nature national park beautiful winter snow scenery HDR landscapce (sunset)",
+      "clip": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "96": {
+    "inputs": {
+      "text": "(solo),girl(flat chest:0.9),(fennec ears:1.0) (fox ears:1.0),long hair,(black hair),(messy hair),(red highlights),hair over one eye,red eyes,sharp eyes,choker,(hoodie),open jacket,running (school uniform),sky clouds nature national park beautiful winter snow scenery HDR landscapce",
+      "clip": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "97": {
+    "inputs": {
+      "text": "(solo),girl,(flat chest:0.9),(fennec ears:1.0) (fox ears:1.0),short hair,(pink hair),(messy hair),(blue highlights),blue eyes,(hoodie),open jacket,running (school uniform),sky clouds nature national park beautiful winter snow scenery HDR landscapce",
+      "clip": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "99": {
+    "inputs": {
+      "width": 1280,
+      "height": 720,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "100": {
+    "inputs": {
+      "width": 256,
+      "height": 512,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "109": {
+    "inputs": {
+      "Value": 60
+    },
+    "class_type": "Integer"
+  },
+  "110": {
+    "inputs": {
+      "Value": 15
+    },
+    "class_type": "Integer"
+  },
+  "112": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "150",
+        2
+      ],
+      "steps": [
+        "109",
+        0
+      ],
+      "cfg": 5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": [
+        "110",
+        0
+      ],
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "89",
+        0
+      ],
+      "positive": [
+        "97",
+        0
+      ],
+      "negative": [
+        "94",
+        0
+      ],
+      "latent_image": [
+        "113",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced"
+  },
+  "113": {
+    "inputs": {
+      "width": 256,
+      "height": 512,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "114": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "150",
+        2
+      ],
+      "steps": [
+        "109",
+        0
+      ],
+      "cfg": 5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": [
+        "110",
+        0
+      ],
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "89",
+        0
+      ],
+      "positive": [
+        "96",
+        0
+      ],
+      "negative": [
+        "94",
+        0
+      ],
+      "latent_image": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced"
+  },
+  "115": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "150",
+        2
+      ],
+      "steps": [
+        "109",
+        0
+      ],
+      "cfg": 5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": [
+        "110",
+        0
+      ],
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "89",
+        0
+      ],
+      "positive": [
+        "95",
+        0
+      ],
+      "negative": [
+        "94",
+        0
+      ],
+      "latent_image": [
+        "99",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced"
+  },
+  "120": {
+    "inputs": {
+      "MultiLatentComposite-Canvas": null,
+      "index": 0,
+      "x": 840,
+      "y": 208,
+      "feather": 80,
+      "samples_to": [
+        "115",
+        0
+      ],
+      "samples_from0": [
+        "112",
+        0
+      ],
+      "samples_from1": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "MultiLatentComposite"
+  },
+  "121": {
+    "inputs": {
+      "add_noise": "disable",
+      "noise_seed": [
+        "150",
+        2
+      ],
+      "steps": [
+        "109",
+        0
+      ],
+      "cfg": 5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 15,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "89",
+        0
+      ],
+      "positive": [
+        "93",
+        0
+      ],
+      "negative": [
+        "94",
+        0
+      ],
+      "latent_image": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced"
+  },
+  "126": {
+    "inputs": {
+      "samples": [
+        "121",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "136": {
+    "inputs": {
+      "samples": [
+        "115",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "137": {
+    "inputs": {
+      "images": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "138": {
+    "inputs": {
+      "samples": [
+        "114",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "139": {
+    "inputs": {
+      "images": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "140": {
+    "inputs": {
+      "samples": [
+        "112",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "141": {
+    "inputs": {
+      "images": [
+        "140",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "145": {
+    "inputs": {
+      "samples": [
+        "120",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "146": {
+    "inputs": {
+      "images": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "147": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  },
+  "150": {
+    "inputs": {
+      "number_type": "integer",
+      "minimum": 0,
+      "maximum": 100000,
+      "seed": 531064912495563
+    },
+    "class_type": "Random Number"
+  }
+}
